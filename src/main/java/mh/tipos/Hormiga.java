@@ -1,6 +1,6 @@
 package mh.tipos;
 
-import mh.P4;
+import mh.P5;
 import java.util.Random;
 
 /**
@@ -41,8 +41,8 @@ public class Hormiga {
 
         for (int i = 0; i < posibles; i++) {
             int pos = abiertos.get(i).id;
-            double a = Math.pow(TAU.m[actual.id][pos], P4.ALPHA);
-            double b = Math.pow(P4.ETA.m[actual.id][pos], P4.BETA);
+            double a = Math.pow(TAU.m[actual.id][pos], P5.ALPHA);
+            double b = Math.pow(P5.ETA.m[actual.id][pos], P5.BETA);
             num[i] = a * b;
             sum = sum + num[i];
         }
@@ -71,13 +71,13 @@ public class Hormiga {
     }
 
     public static MDouble actualizacion(Hormiga[] m, MDouble TAU, double iter) {
-        for (int x = 0; x < P4.CIU; x++) {
-            for (int y = 0; y < P4.CIU; y++) {
+        for (int x = 0; x < P5.CIU; x++) {
+            for (int y = 0; y < P5.CIU; y++) {
                 if (x != y) {
-                    double evapora = (1.0 - P4.RHO) * TAU.m[x][y];
+                    double evapora = (1.0 - P5.RHO) * TAU.m[x][y];
 
                     double aporte = 0.0;
-                    for (int i = 0; i < P4.NUMH; i++) {
+                    for (int i = 0; i < P5.NUMH; i++) {
                         if (Nodo.arco(m[i].cerrados, x, y) || Nodo.arco(m[i].cerrados, y, x)) {
                             aporte = aporte + (1.0 / m[i].coste);
                         }
@@ -91,13 +91,13 @@ public class Hormiga {
     }
 
     public static MDouble actualizacion(Hormiga[] m, MDouble TAU, double iter, Hormiga elite) {
-        for (int x = 0; x < P4.CIU; x++) {
-            for (int y = 0; y < P4.CIU; y++) {
+        for (int x = 0; x < P5.CIU; x++) {
+            for (int y = 0; y < P5.CIU; y++) {
                 if (x != y) {
-                    double evapora = (1.0 - P4.RHO) * TAU.m[x][y];
+                    double evapora = (1.0 - P5.RHO) * TAU.m[x][y];
 
                     double aporte = 0.0;
-                    for (int i = 0; i < P4.NUMH; i++) {
+                    for (int i = 0; i < P5.NUMH; i++) {
                         if (Nodo.arco(m[i].cerrados, x, y) || Nodo.arco(m[i].cerrados, y, x)) {
                             aporte = aporte + (1.0 / m[i].coste);
                         }
@@ -105,7 +105,7 @@ public class Hormiga {
 
                     double refuerzo = 0.0;
                     if (Nodo.arco(elite.cerrados, x, y) || Nodo.arco(elite.cerrados, y, x)) {
-                        refuerzo = P4.ELITISMO * (1.0 / elite.coste);
+                        refuerzo = P5.ELITISMO * (1.0 / elite.coste);
                     }
 
                     TAU.m[x][y] = evapora + aporte + refuerzo;

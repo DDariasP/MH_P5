@@ -1,6 +1,6 @@
 package mh.algoritmos;
 
-import mh.P4;
+import mh.P5;
 import mh.tipos.*;
 
 /**
@@ -16,7 +16,7 @@ public class Greedy {
 
     public Greedy() {
 
-        tam = P4.listaCiu.size();
+        tam = P5.listaCiu.size();
         ant = new Hormiga[tam];
         peor = Integer.MIN_VALUE;
         mejor = new Hormiga();
@@ -24,18 +24,18 @@ public class Greedy {
 
         for (int i = 0; i < tam; i++) {
 
-            Nodo inicial = P4.listaCiu.get(i);
-            ant[i] = new Hormiga(i, inicial, P4.listaCiu);
+            Nodo inicial = P5.listaCiu.get(i);
+            ant[i] = new Hormiga(i, inicial, P5.listaCiu);
 
             while (ant[i].abiertos.size() > 0) {
                 Nodo actual = ant[i].cerrados.tail();
                 int posibles = ant[i].abiertos.size();
                 Nodo siguiente = ant[i].abiertos.get(0);
-                int costeS = P4.distancias.m[actual.id][siguiente.id];
+                int costeS = P5.distancias.m[actual.id][siguiente.id];
 
                 for (int j = 1; j < posibles; j++) {
                     Nodo candidato = ant[i].abiertos.get(j);
-                    int costeC = P4.distancias.m[actual.id][candidato.id];
+                    int costeC = P5.distancias.m[actual.id][candidato.id];
                     if (costeS > costeC) {
                         siguiente = candidato;
                         costeS = costeC;
@@ -46,7 +46,7 @@ public class Greedy {
                 ant[i].cerrados.add(siguiente);
             }
 
-            ant[i].coste = P4.distancias.costeCamino(ant[i].cerrados);
+            ant[i].coste = P5.distancias.costeCamino(ant[i].cerrados);
             if (mejor.coste > ant[i].coste) {
                 mejor = ant[i];
             }

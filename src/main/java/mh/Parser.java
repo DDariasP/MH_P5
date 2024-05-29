@@ -54,7 +54,7 @@ public class Parser {
             line = scanner.nextLine();
             while (!line.equals("-1")) {
                 int id = Integer.parseInt(line) - 1;
-                solucion.add(P4.listaCiu.get(id));
+                solucion.add(P5.listaCiu.get(id));
                 line = scanner.nextLine();
             }
             scanner.close();
@@ -76,25 +76,25 @@ public class Parser {
             resultados.createNewFile();
             FileWriter writer = new FileWriter(filename);
 
-            for (int t = 0; t < P4.P.length; t++) {
-                writer.write(P4.P[t] + ".tsp");
+            for (int t = 0; t < P5.P.length; t++) {
+                writer.write(P5.P[t] + ".tsp");
 
                 writer.write("\nOPTIMA");
-                writer.write("\n" + P4.solOPT[t].coste);
+                writer.write("\n" + P5.solOPT[t].coste);
 
                 writer.write("\nGREEDY");
-                writer.write("\n" + P4.solG[t].peor + "\tpeor");
-                writer.write("\n" + P4.solG[t].medio + "\tmedio");
-                writer.write("\n" + P4.solG[t].mejor.coste + "\tmejor");
+                writer.write("\n" + P5.solG[t].peor + "\tpeor");
+                writer.write("\n" + P5.solG[t].medio + "\tmedio");
+                writer.write("\n" + P5.solG[t].mejor.coste + "\tmejor");
 
-                writer.write("\nSH - " + P4.MAXITER[t] + " iter");
-                for (int i = 0; i < P4.SEED.length; i++) {
-                    writer.write("\n" + P4.solSH[t][i].elite.coste + "\t" + P4.solSH[t][i].elite.eval);
+                writer.write("\nSH - " + P5.MAXITER[t] + " iter");
+                for (int i = 0; i < P5.SEED.length; i++) {
+                    writer.write("\n" + P5.solSH[t][i].elite.coste + "\t" + P5.solSH[t][i].elite.eval);
                 }
 
-                writer.write("\nSHE - " + P4.MAXITER[t] + " iter");
-                for (int i = 0; i < P4.SEED.length; i++) {
-                    writer.write("\n" + P4.solSHE[t][i].elite.coste + "\t" + P4.solSHE[t][i].elite.eval);
+                writer.write("\nSHE - " + P5.MAXITER[t] + " iter");
+                for (int i = 0; i < P5.SEED.length; i++) {
+                    writer.write("\n" + P5.solSHE[t][i].elite.coste + "\t" + P5.solSHE[t][i].elite.eval);
                 }
 
                 writer.write("\n---------------------\n");

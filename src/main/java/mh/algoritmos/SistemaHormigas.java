@@ -1,6 +1,6 @@
 package mh.algoritmos;
 
-import mh.P4;
+import mh.P5;
 import mh.tipos.*;
 import java.util.Random;
 
@@ -23,9 +23,9 @@ public class SistemaHormigas {
     public SistemaHormigas(int s, int t) {
         SEED = s;
         rand = new Random(SEED);
-        TAU0 = 1.0 / (P4.CIU * P4.solG[t].mejor.coste);
-        TAU = new MDouble(P4.CIU, P4.CIU, TAU0);
-        ant = new Hormiga[P4.NUMH];
+        TAU0 = 1.0 / (P5.CIU * P5.solG[t].mejor.coste);
+        TAU = new MDouble(P5.CIU, P5.CIU, TAU0);
+        ant = new Hormiga[P5.NUMH];
         elite = Hormiga.NULA;
         eval = 0;
         iter = 0;
@@ -37,18 +37,18 @@ public class SistemaHormigas {
 
         while (true) {
             //NODO INICIAL
-            for (int i = 0; i < P4.NUMH; i++) {
-                int pos = rand.nextInt(P4.CIU);
-                Nodo inicial = P4.listaCiu.get(pos);
-                ant[i] = new Hormiga(i, inicial, P4.listaCiu);
+            for (int i = 0; i < P5.NUMH; i++) {
+                int pos = rand.nextInt(P5.CIU);
+                Nodo inicial = P5.listaCiu.get(pos);
+                ant[i] = new Hormiga(i, inicial, P5.listaCiu);
             }
 
             //CONSTRUIR SOLUCIONES
-            for (int i = 0; i < P4.NUMH; i++) {
-                for (int j = 1; j < P4.CIU; j++) {
+            for (int i = 0; i < P5.NUMH; i++) {
+                for (int j = 1; j < P5.CIU; j++) {
                     ant[i].transicion(TAU, rand);
                 }
-                ant[i].coste = P4.distancias.costeCamino(ant[i].cerrados);
+                ant[i].coste = P5.distancias.costeCamino(ant[i].cerrados);
                 eval++;
                 ant[i].eval = eval;
             }
@@ -65,14 +65,14 @@ public class SistemaHormigas {
             }
 
             //CONVERGENCIA
-            if (iter % P4.RATIO[t] == 0) {
+            if (iter % P5.RATIO[t] == 0) {
                 convergencia.add(elite.coste);
                 System.out.println("iter=" + iter);
             }
 
             //ITERACIONES
             iter++;
-            if (iter > P4.MAXITER[t]) {
+            if (iter > P5.MAXITER[t]) {
                 break;
             }
         }

@@ -31,7 +31,7 @@ public class Grafica extends JFrame {
 
         for (int i = 0; i < datos.length; i++) {
             //crear funcion
-            XYDataset funcion = createDataset(i, P4.P[t] + "-S" + P4.SEED[i]);
+            XYDataset funcion = createDataset(i, P5.P[t] + "-S" + P5.SEED[i]);
             //caracteristicas de funcion
             XYItemRenderer renderer = new XYLineAndShapeRenderer(true, true);
             renderer.setSeriesStroke(0, new BasicStroke(2.0f));
@@ -41,7 +41,7 @@ public class Grafica extends JFrame {
         }
 
         //crear y añadir los ejes
-        ValueAxis domain = new NumberAxis("Iteración (1 : " + P4.RATIO[t] + ")");
+        ValueAxis domain = new NumberAxis("Iteración (1 : " + P5.RATIO[t] + ")");
         domain.setRange(minX - 1, maxX + 1);
         ValueAxis range = new NumberAxis("Coste");
         int diffY = Math.abs((maxY - minY) / 10);

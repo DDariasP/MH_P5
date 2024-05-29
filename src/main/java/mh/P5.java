@@ -8,7 +8,7 @@ import static javax.swing.WindowConstants.*;
  *
  * @author diego
  */
-public class P4 {
+public class P5 {
 
     public static final int[] SEED = {111, 222, 333, 123, 321};
     public static final int NUMH = 30;
