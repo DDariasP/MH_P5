@@ -1,0 +1,12 @@
+Rosenbrock.tsp
+OPTIMA
+GREEDY
+SH - 10 iter
+SHE - 10 iter
+---------------------
+Rastrigin.tsp
+OPTIMA
+GREEDY
+SH - 10 iter
+SHE - 10 iter
+---------------------

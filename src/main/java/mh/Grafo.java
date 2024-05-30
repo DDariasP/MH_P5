@@ -1,9 +1,7 @@
 package mh;
 
 import mh.tipos.*;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel;
@@ -23,13 +21,13 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class Grafo extends JFrame {
 
-    public Lista<Particula> cm;
-    public int minX, maxX, minY, maxY;
-    
-    public Grafo(){}
+    public Lista<Particula> nube;
 
-    public void Grafo(Lista<Particula> camino) {
-        cm = camino;
+    public Grafo() {
+    }
+
+    public void Grafo(Lista<Particula> swarm, int t) {
+        nube = swarm;
 
         //crear la grafica
         XYPlot plot = new XYPlot();
@@ -38,19 +36,17 @@ public class Grafo extends JFrame {
         XYDataset setNube = createNube();
         //caracteristicas de la nube
         XYItemRenderer rendererN = new XYLineAndShapeRenderer(false, true);
-//        rendererN.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
+        rendererN.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
         rendererN.setSeriesPaint(0, Color.MAGENTA);
         //añadir la nube a la grafica
-        plot.setDataset(cm.size(), setNube);
-        plot.setRenderer(cm.size(), rendererN);
+        plot.setDataset(nube.size(), setNube);
+        plot.setRenderer(nube.size(), rendererN);
 
         //crear y añadir los ejes
         ValueAxis domain = new NumberAxis("");
-        int diffX = Math.abs((maxX - minX) / 10);
-        domain.setRange(minX - diffX, maxX + diffX);
+        domain.setRange(P5.MINX[t], P5.MAXX[t]);
         ValueAxis range = new NumberAxis("");
-        int diffY = Math.abs((maxY - minY) / 10);
-        range.setRange(minY - diffY, maxY + diffY);
+        range.setRange(P5.MINY[t], P5.MAXY[t]);
         plot.setDomainAxis(0, domain);
         plot.setRangeAxis(0, range);
 
@@ -70,24 +66,11 @@ public class Grafo extends JFrame {
         XYSeriesCollection dataset = new XYSeriesCollection();
         //ciudades 
         XYSeries series = new XYSeries("");
-        for (int i = 0; i < cm.size(); i++) {
-            series.add(cm.get(i).x, cm.get(i).y);
+        for (int i = 0; i < nube.size(); i++) {
+            series.add(nube.get(i).x, nube.get(i).y);
         }
-        minY = (int) series.getMinY();
-        maxY = (int) series.getMaxY();
-        minX = (int) series.getMinX();
-        maxX = (int) series.getMaxX();
         dataset.addSeries(series);
         return dataset;
     }
 
-    private XYDataset createDist(int n) {
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        //parte-i
-        XYSeries series = new XYSeries("");
-        series.add(cm.get(n % cm.size()).x, cm.get(n).y);
-        series.add(cm.get((n + 1) % cm.size()).x, cm.get((n + 1) % cm.size()).y);
-        dataset.addSeries(series);
-        return dataset;
-    }
 }

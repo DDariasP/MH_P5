@@ -33,6 +33,14 @@ public class Particula {
         z = 20.0 + pow(x, 2.0) + pow(y, 2.0) - 10.0 * (cos(2 * PI * x) + cos(2 * PI * y));
     }
 
+    public void moverA(Random rand, int t) {
+
+    }
+
+    public void moverB(Random rand, int t) {
+
+    }
+
     public static Particula genRandom(Random rand, int t) {
         double x = P5.MINX[t] + (P5.MAXX[t] - P5.MINX[t]) * rand.nextDouble();
         double y = P5.MINY[t] + (P5.MAXY[t] - P5.MINY[t]) * rand.nextDouble();
@@ -78,6 +86,18 @@ public class Particula {
 
         Particula vecino = new Particula(x, y);
         return vecino;
+    }
+
+    public static void vecindario(Lista<Particula> swarm) {
+        int tam = swarm.size();
+        for (int i = 0; i < tam; i++) {
+            Particula p = swarm.get(i);
+            for (int v = 1; v <= P5.VECIN; v++) {
+                p.vecinos.add(swarm.get((i + v) % tam));
+//                System.out.println((i - v) % tam);
+//                p.vecinos.add(swarm.get((i - v) % tam));
+            }
+        }
     }
 
     public static void sort(Lista<Particula> lista) {

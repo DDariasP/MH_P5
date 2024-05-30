@@ -1,8 +1,6 @@
 package mh;
 
-import mh.tipos.*;
 import mh.algoritmos.*;
-import java.util.Random;
 import static javax.swing.WindowConstants.*;
 import static java.lang.Math.*;
 
@@ -15,8 +13,8 @@ public class P5 {
     public static final int[] SEED = {111, 222, 333, 123, 321};
     public static final int NUMP = 10;
     public static final int VECIN = 2;
-    public static final int[] MAXITER = {100, 100};
-    public static final int[] RATIO = {5, 5};
+    public static final int[] MAXITER = {10, 10};
+    public static final int[] RATIO = {1, 1};
     public static final String[] P = {"Rosenbrock", "Rastrigin"};
     public static final double[] MINX = {-1.5, -5.0};
     public static final double[] MAXX = {2.0, 5.0};
@@ -24,10 +22,10 @@ public class P5 {
     public static final double[] MAXY = {3.0, 5.0};
     public static double[] VMINX, VMAXX, VMINY, VMAXY;
     public static BusquedaLocal[][] BL;
+    public static PSO[][] PSO_A;
 
     /**
      * @param args the command line arguments
-     * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
 
@@ -49,7 +47,7 @@ public class P5 {
             System.out.println("BL - " + P[t]);
             System.out.println("coste\t\t\teval\titer");
             for (int i = 0; i < SEED.length; i++) {
-                BL[t][i] = new BusquedaLocal(i, t);
+                BL[t][i] = new BusquedaLocal(SEED[i], t);
                 BL[t][i].ejecutarBL();
             }
             System.out.println("------------------------------------------------------");
@@ -60,31 +58,20 @@ public class P5 {
             convBL.setTitle("BL - " + P[t]);
             convBL.setVisible(true);
         }
-        
+
         //PSO
-
-        /*
-        Random rand = new Random();
-        Grafo gOPT = new Grafo();
-
-        for (int j = 0; j < 10; j++) {
-
-            Lista<Particula> n = new Lista<>();
-            for (int i = 0; i < 10; i++) {
-                int pos = rand.nextInt(10);
-                n.add(new Particula(pos, pos, pos));
+        PSO_A = new PSO[P.length][SEED.length];
+        for (int t = 0; t < P.length; t++) {
+            System.out.println("PSO_A - " + P[t]);
+            System.out.println("coste\t\t\teval\titer");
+            for (int i = 0; i < SEED.length; i++) {
+                PSO_A[t][i] = new PSO(SEED[i], t, 0);
+                PSO_A[t][i].ejecutarPSO();
             }
-
-            //CAMINO
-            gOPT.Grafo(n);
-            gOPT.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            gOPT.setBounds(200, 350, 800, 400);
-            gOPT.setTitle(P[0] + ".tsp - Optima");
-            gOPT.setVisible(true);
-
-            Thread.sleep(500);
-
+            System.out.println("------------------------------------------------------");
         }
-         */
+
+        //GUARDAR
+        Parser.escribir("R.txt");
     }
 }
