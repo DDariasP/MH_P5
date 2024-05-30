@@ -11,7 +11,7 @@ import static javax.swing.WindowConstants.*;
  */
 public class PSO {
 
-    public static final String[] nombre = {"Borde", "Continua"};
+    public static final String[] nombre = {"Borde", "Rebote", "Salto"};
     public final int SEED, t, tipo;
     public Random rand;
     public Lista<Particula> swarm;
@@ -58,10 +58,13 @@ public class PSO {
                 Particula actual = swarm.get(i);
                 switch (tipo) {
                     case 0:
-                        actual.moverA(rand, t);
+                        actual.moverB(rand, t);
                         break;
                     case 1:
-                        actual.moverB(rand, t);
+                        actual.moverR(rand, t);
+                        break;
+                    case 2:
+                        actual.moverS(rand, t);
                         break;
                     default:
                         throw new AssertionError();
@@ -79,10 +82,10 @@ public class PSO {
 
             g.Grafo(swarm, t);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            g.setBounds(1200, 100, 600, 600);
+            g.setBounds(200, 200, 600, 600);
             g.setTitle("PSO/" + nombre[tipo] + " - " + P5.P[t] + "/S" + SEED);
             g.setVisible(true);
-            Thread.sleep(500);
+            Thread.sleep(100);
 
             Particula.sort(swarm);
             Particula candidata = swarm.get(0);

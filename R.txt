@@ -1,12 +1,12 @@
 Rosenbrock.tsp
 OPTIMA
 GREEDY
-SH - 10 iter
-SHE - 10 iter
+SH - 10.0 iter
+SHE - 10.0 iter
 ---------------------
 Rastrigin.tsp
 OPTIMA
 GREEDY
-SH - 10 iter
-SHE - 10 iter
+SH - 10.0 iter
+SHE - 10.0 iter
 ---------------------

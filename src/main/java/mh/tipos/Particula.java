@@ -10,12 +10,16 @@ import static java.lang.Math.*;
  */
 public class Particula {
 
+    public static int N = 0;
+    public final int id;
     public double x, y, z;
     public int eval, iter;
     public double[] velocidad;
     public Lista<Particula> vecinos, mejores;
 
     public Particula(double a, double b) {
+        id = N;
+        N++;
         x = a;
         y = b;
         eval = -1;
@@ -23,6 +27,14 @@ public class Particula {
         velocidad = new double[2];
         vecinos = new Lista<>();
         mejores = new Lista<>();
+    }
+
+    public Particula(Particula p) {
+        id = p.id;
+        x = p.x;
+        y = p.y;
+        eval = p.eval;
+        iter = p.iter;
     }
 
     public void rosenbrock() {
@@ -33,11 +45,15 @@ public class Particula {
         z = 20.0 + pow(x, 2.0) + pow(y, 2.0) - 10.0 * (cos(2 * PI * x) + cos(2 * PI * y));
     }
 
-    public void moverA(Random rand, int t) {
+    public void moverB(Random rand, int t) {
 
     }
 
-    public void moverB(Random rand, int t) {
+    public void moverR(Random rand, int t) {
+
+    }
+
+    public void moverS(Random rand, int t) {
 
     }
 
@@ -93,9 +109,11 @@ public class Particula {
         for (int i = 0; i < tam; i++) {
             Particula p = swarm.get(i);
             for (int v = 1; v <= P5.VECIN; v++) {
-                p.vecinos.add(swarm.get((i + v) % tam));
-//                System.out.println((i - v) % tam);
-//                p.vecinos.add(swarm.get((i - v) % tam));
+                int pos;
+                pos = (i + v) % tam; //resto
+                p.vecinos.add(swarm.get(pos));
+                pos = (((i - v) % tam) + tam) % tam; //modulo
+                p.vecinos.add(swarm.get(pos));
             }
         }
     }
@@ -136,7 +154,7 @@ public class Particula {
 
     @Override
     public String toString() {
-        String output = "[" + x + "," + y + "]";
+        String output = String.valueOf(id);
         return output;
     }
 
