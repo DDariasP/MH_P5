@@ -1,12 +1,8 @@
-mh/tipos/Hormiga.class
+mh/P5.class
+mh/algoritmos/BusquedaLocal.class
 mh/Grafo.class
-mh/algoritmos/Greedy.class
+mh/algoritmos/PSO.class
 mh/Grafica.class
-mh/tipos/MDouble.class
-mh/tipos/Nodo.class
-mh/algoritmos/SistemaHormigas.class
-mh/algoritmos/SistemaElitista.class
 mh/tipos/Lista.class
-mh/tipos/MInteger.class
 mh/Parser.class
-mh/P4.class
+mh/tipos/Particula.class

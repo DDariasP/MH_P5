@@ -1,6 +1,7 @@
 package mh;
 
 import mh.tipos.*;
+import mh.algoritmos.*;
 import java.awt.*;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel;
@@ -16,36 +17,32 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class Grafica extends JFrame {
 
-    public final Lista<Integer>[] d;
-    public int minX, maxX, minY, maxY;
+    public double minY, maxY;
 
-    public Grafica(Lista<Integer>[] datos, int t) {
-        d = datos;
-        minX = Integer.MAX_VALUE;
-        maxX = Integer.MIN_VALUE;
-        minY = Integer.MAX_VALUE;
-        maxY = Integer.MIN_VALUE;
+    public Grafica(BusquedaLocal[] bl, String nombre) {
+        minY = Double.MAX_VALUE;
+        maxY = Double.MIN_VALUE;
 
         //crear la grafica
         XYPlot plot = new XYPlot();
 
-        for (int i = 0; i < datos.length; i++) {
+        for (int i = 0; i < bl.length; i++) {
+            String ini = nombre + "-S" + P5.SEED[i];
             //crear funcion
-            XYDataset funcion = createDataset(i, P5.P[t] + "-S" + P5.SEED[i]);
+            XYDataset funcion = createDataset(bl[i].convergencia, ini);
             //caracteristicas de funcion
             XYItemRenderer renderer = new XYLineAndShapeRenderer(true, true);
-            renderer.setSeriesStroke(0, new BasicStroke(2.0f));
+            renderer.setSeriesStroke(i, new BasicStroke(2.0f));
             //añadir funcion a la grafica
             plot.setDataset(i, funcion);
             plot.setRenderer(i, renderer);
         }
 
         //crear y añadir los ejes
-        ValueAxis domain = new NumberAxis("Iteración (1 : " + P5.RATIO[t] + ")");
-        domain.setRange(minX - 1, maxX + 1);
+        ValueAxis domain = new NumberAxis("Evaluación (1 : " + P5.RATIO[0] + ")");
         ValueAxis range = new NumberAxis("Coste");
-        int diffY = Math.abs((maxY - minY) / 10);
-        range.setRange(minY - diffY, maxY - diffY);
+        double diffY = Math.abs((maxY - minY) / 10.0);
+        range.setRange(minY - diffY, maxY + diffY);
         plot.setDomainAxis(0, domain);
         plot.setRangeAxis(0, range);
 
@@ -60,27 +57,17 @@ public class Grafica extends JFrame {
         setContentPane(panel);
     }
 
-    private XYDataset createDataset(int n, String nombre) {
+    private XYDataset createDataset(Lista<Double> datos, String nombre) {
         XYSeriesCollection dataset = new XYSeriesCollection();
         XYSeries series = new XYSeries(nombre);
-        for (int i = 0; i < d[n].size(); i++) {
-            series.add(i, d[n].get(i));
+        for (int i = 0; i < datos.size(); i++) {
+            series.add(i, datos.get(i));
         }
-        int min = (int) series.getMinY();
-        if (minY > min) {
-            minY = min;
+        if (minY > series.getMinY()) {
+            minY = series.getMinY();
         }
-        int max = (int) series.getMaxY();
-        if (maxY < max) {
-            maxY = max;
-        }
-        min = (int) series.getMinX();
-        if (minX > min) {
-            minX = min;
-        }
-        max = (int) series.getMaxX();
-        if (maxX < max) {
-            maxX = max;
+        if (maxY < series.getMaxY()) {
+            maxY = series.getMaxY();
         }
         dataset.addSeries(series);
         return dataset;

@@ -23,33 +23,22 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class Grafo extends JFrame {
 
-    public final Lista<Nodo> cm;
+    public Lista<Particula> cm;
     public int minX, maxX, minY, maxY;
+    
+    public Grafo(){}
 
-    public Grafo(Lista<Nodo> camino) {
+    public void Grafo(Lista<Particula> camino) {
         cm = camino;
 
         //crear la grafica
         XYPlot plot = new XYPlot();
 
-        //crear cada parte-i del camino
-        for (int i = 0; i < cm.size(); i++) {
-            XYDataset setDisti = createDist(i);
-            //caracteristicas de parte-i
-            XYItemRenderer rendereri = new XYLineAndShapeRenderer(true, true);
-            rendereri.setSeriesShape(0, new Ellipse2D.Double(-3.0, 0.0, 3.0, 3.0));
-            rendereri.setSeriesPaint(0, Color.CYAN);
-            rendereri.setSeriesStroke(0, new BasicStroke(2.0f));
-            //añadir parte-i a la grafica
-            plot.setDataset(i, setDisti);
-            plot.setRenderer(i, rendereri);
-        }
-
         //crear la nube
         XYDataset setNube = createNube();
         //caracteristicas de la nube
         XYItemRenderer rendererN = new XYLineAndShapeRenderer(false, true);
-        rendererN.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
+//        rendererN.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
         rendererN.setSeriesPaint(0, Color.MAGENTA);
         //añadir la nube a la grafica
         plot.setDataset(cm.size(), setNube);
