@@ -12,7 +12,7 @@ import static javax.swing.WindowConstants.*;
 public class PSO {
 
     public final int SEED, t;
-    public final char tipo;
+    public final char scope;
     public Random rand;
     public Lista<Particula> swarm;
     public Lista<Particula> gBest;
@@ -20,7 +20,7 @@ public class PSO {
     public PSO(int a, int b, char c) {
         SEED = a;
         t = b;
-        tipo = c;
+        scope = c;
         rand = new Random(SEED);
         swarm = new Lista<>();
         gBest = new Lista<>();
@@ -58,7 +58,8 @@ public class PSO {
             iter++;
             for (int i = 0; i < P5.NUMP; i++) {
                 Particula actual = swarm.get(i);
-                actual.mover(gBest, rand, t, tipo);
+                actual.posicion(t);
+                actual.velocidad(gBest, rand, t, scope);
                 if (t == 0) {
                     actual.rosenbrock();
                 } else {
@@ -77,9 +78,9 @@ public class PSO {
             g.Nube(swarm, t);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 200, 600, 600);
-            g.setTitle("PSO/" + tipo + " - " + P5.P[t] + "/S" + SEED);
+            g.setTitle("PSO/" + scope + " - " + P5.P[t] + "/S" + SEED);
             g.setVisible(true);
-            Thread.sleep(0);
+            Thread.sleep(P5.T);
 
             Particula.sort(swarm);
             Particula candidata = swarm.get(0);

@@ -5,8 +5,8 @@ import java.util.Random;
 import org.jfree.chart.util.ShapeUtils;
 import java.awt.Color;
 import java.awt.Shape;
-import static java.lang.Math.*;
 import java.text.DecimalFormat;
+import static java.lang.Math.*;
 
 /**
  *
@@ -54,71 +54,7 @@ public class Particula {
         coste = (new DecimalFormat("0.####E0")).format(z);
     }
 
-    public void mover(Lista<Particula> listaB, Random rand, int t, char tipo) {
-        switch (tipo) {
-            case 'B':
-                borde(t);
-                break;
-            case 'R':
-                rebote(t);
-                break;
-            case 'S':
-                salto(t);
-                break;
-            default:
-                throw new AssertionError();
-        }
-
-        double vx, vy, rand1, rand2;
-        rand1 = rand.nextDouble();
-        rand2 = rand.nextDouble();
-
-        Particula.sort(vecinos);
-        Particula lBest = vecinos.get(0);
-
-        Particula gBest = listaB.get(0);
-        int i = 1;
-        boolean iguales = gBest.id == id;
-        while (iguales && i < listaB.size()) {
-            Particula b = listaB.get(i);
-            if (b.id != id) {
-                gBest = b;
-                iguales = false;
-            }
-            i++;
-        }
-
-        vx = global(rand1, rand2, gBest.x);
-        vy = global(rand1, rand2, gBest.y);
-
-        vx = P5.OMEGA * v[0] + P5.PHI1 * rand1 * (pBestx - x) + P5.PHI2 * rand2 * (gBest.x - x);
-        vy = P5.OMEGA * v[1] + P5.PHI1 * rand1 * (pBesty - y) + P5.PHI2 * rand2 * (gBest.y - y);
-
-        if (vx > P5.VMAXX[t]) {
-            vx = P5.VMAXX[t];
-        }
-        if (vx < P5.VMINX[t]) {
-            vx = P5.VMINX[t];
-        }
-        if (vy > P5.VMAXY[t]) {
-            vy = P5.VMAXY[t];
-        }
-        if (vy < P5.VMINY[t]) {
-            vy = P5.VMINY[t];
-        }
-        v[0] = vx;
-        v[1] = vy;
-    }
-
-    private void borde(int t) {
-
-    }
-
-    private void rebote(int t) {
-
-    }
-
-    private void salto(int t) {
+    public void posicion(int t) {
         double posx, posy;
         posx = x + v[0];
         if (posx > P5.MAXX[t]) {
@@ -137,9 +73,52 @@ public class Particula {
         }
         y = posy;
     }
-    
-    private double global(double r1,double r2, double gBest){
-        return 0;
+
+    public void velocidad(Lista<Particula> listaB, Random rand, int t, char scope) {
+        double vx, vy, rand1, rand2;
+        Particula lBest, gBest;
+        Particula Best = this;
+        rand1 = rand.nextDouble();
+        rand2 = rand.nextDouble();
+
+        if (scope == 'L') {
+            Particula.sort(vecinos);
+            lBest = vecinos.get(0);
+            Best = lBest;
+        }
+
+        if (scope == 'G') {
+            gBest = listaB.get(0);
+            int i = 1;
+            boolean iguales = gBest.id == id;
+            while (iguales && i < listaB.size()) {
+                Particula b = listaB.get(i);
+                if (b.id != id) {
+                    gBest = b;
+                    iguales = false;
+                }
+                i++;
+            }
+            Best = gBest;
+        }
+
+        vx = P5.OMEGA * v[0] + P5.PHI1 * rand1 * (pBestx - x) + P5.PHI2 * rand2 * (Best.x - x);
+        vy = P5.OMEGA * v[1] + P5.PHI1 * rand1 * (pBesty - y) + P5.PHI2 * rand2 * (Best.y - y);
+
+        if (vx > P5.VMAXX[t]) {
+            vx = P5.VMAXX[t];
+        }
+        if (vx < P5.VMINX[t]) {
+            vx = P5.VMINX[t];
+        }
+        if (vy > P5.VMAXY[t]) {
+            vy = P5.VMAXY[t];
+        }
+        if (vy < P5.VMINY[t]) {
+            vy = P5.VMINY[t];
+        }
+        v[0] = vx;
+        v[1] = vy;
     }
 
     public static Particula genRandom(Random rand, int t) {

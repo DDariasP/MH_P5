@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <exec.mainClass>mh.MH_P2</exec.mainClass>
+        <exec.mainClass>mh.MH_P5</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
@@ -35,7 +35,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>mh.P2</mainClass>
+                            <mainClass>mh.P5</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

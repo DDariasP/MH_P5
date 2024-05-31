@@ -35,23 +35,16 @@ public class Parser {
                 }
                 writer.write("\n---------------------\n");
 
-                writer.write("\nPSO/B - " + P5.MAXITER[t] + " iter");
+                writer.write("\nPSOLocal - " + P5.MAXITER[t] + " iter");
                 for (int i = 0; i < P5.SEED.length; i++) {
-                    Particula s = P5.PSO_B[t][i].gBest.get(0);
+                    Particula s = P5.PSOLocal[t][i].gBest.get(0);
                     writer.write("\n" + s.coste + "\t\t" + s.eval);
                 }
                 writer.write("\n---------------------\n");
 
-                writer.write("\nPSO/R - " + P5.MAXITER[t] + " iter");
+                writer.write("\nPSOGlobal - " + P5.MAXITER[t] + " iter");
                 for (int i = 0; i < P5.SEED.length; i++) {
-                    Particula s = P5.PSO_R[t][i].gBest.get(0);
-                    writer.write("\n" + s.coste + "\t\t" + s.eval);
-                }
-                writer.write("\n---------------------\n");
-
-                writer.write("\nPSO/S - " + P5.MAXITER[t] + " iter");
-                for (int i = 0; i < P5.SEED.length; i++) {
-                    Particula s = P5.PSO_S[t][i].gBest.get(0);
+                    Particula s = P5.PSOGlobal[t][i].gBest.get(0);
                     writer.write("\n" + s.coste + "\t\t" + s.eval);
                 }
                 writer.write("\n---------------------\n\n");
