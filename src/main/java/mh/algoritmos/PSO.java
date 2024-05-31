@@ -11,23 +11,25 @@ import static javax.swing.WindowConstants.*;
  */
 public class PSO {
 
-    public static final String[] nombre = {"Borde", "Rebote", "Salto"};
-    public final int SEED, t, tipo;
+    public final int SEED, t;
+    public final char tipo;
     public Random rand;
     public Lista<Particula> swarm;
-    public Particula solucion;
+    public Lista<Particula> gBest;
 
-    public PSO(int a, int b, int c) {
+    public PSO(int a, int b, char c) {
         SEED = a;
         t = b;
         tipo = c;
         rand = new Random(SEED);
         swarm = new Lista<>();
+        gBest = new Lista<>();
     }
 
     public void ejecutarPSO() throws InterruptedException {
         PSO();
-        System.out.println(solucion.coste + "\t\t" + solucion.eval + "\t" + solucion.iter);
+        Particula s = gBest.get(0);
+        System.out.println(s.coste + "\t\t" + s.eval + "\t" + s.iter);
     }
 
     public void PSO() throws InterruptedException {
@@ -42,6 +44,7 @@ public class PSO {
             } else {
                 inicial.rastrigin();
             }
+            inicial.pBestz = inicial.z;
             eval++;
             inicial.eval = eval;
             inicial.iter = iter;
@@ -50,26 +53,12 @@ public class PSO {
         Particula.vecindario(swarm);
 
         Particula.sort(swarm);
-        solucion = swarm.get(0);
+        gBest.add(0, swarm.get(0));
         while (iter < P5.MAXITER[t]) {
             iter++;
             for (int i = 0; i < P5.NUMP; i++) {
-
                 Particula actual = swarm.get(i);
-                switch (tipo) {
-                    case 0:
-                        actual.moverB(rand, t);
-                        break;
-                    case 1:
-                        actual.moverR(rand, t);
-                        break;
-                    case 2:
-                        actual.moverS(rand, t);
-                        break;
-                    default:
-                        throw new AssertionError();
-                }
-
+                actual.mover(gBest, rand, t, tipo);
                 if (t == 0) {
                     actual.rosenbrock();
                 } else {
@@ -78,19 +67,24 @@ public class PSO {
                 eval++;
                 actual.eval = eval;
                 actual.iter = iter;
+                if (actual.pBestz > actual.z) {
+                    actual.pBestx = actual.x;
+                    actual.pBesty = actual.y;
+                    actual.pBestz = actual.z;
+                }
             }
 
             g.Nube(swarm, t);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 200, 600, 600);
-            g.setTitle("PSO/" + nombre[tipo] + " - " + P5.P[t] + "/S" + SEED);
+            g.setTitle("PSO/" + tipo + " - " + P5.P[t] + "/S" + SEED);
             g.setVisible(true);
             Thread.sleep(0);
 
             Particula.sort(swarm);
             Particula candidata = swarm.get(0);
-            if (solucion.z > candidata.z) {
-                solucion = candidata;
+            if (gBest.get(0).z > candidata.z) {
+                gBest.add(0, candidata);
             }
         }
 

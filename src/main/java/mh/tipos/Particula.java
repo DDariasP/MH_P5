@@ -21,10 +21,11 @@ public class Particula {
     public final Color color;
     public final Shape forma;
     public double x, y, z;
+    public double pBestx, pBesty, pBestz;
     public String coste;
     public int eval, iter;
-    public double[] velocidad;
-    public Lista<Particula> vecinos, mejores;
+    public double[] v;
+    public Lista<Particula> vecinos;
 
     public Particula(double a, double b) {
         id = N;
@@ -33,21 +34,14 @@ public class Particula {
         forma = F[id % F.length];
         x = a;
         y = b;
+        z = Double.MAX_VALUE;
+        pBestx = x;
+        pBesty = y;
+        pBestz = z;
         eval = -1;
         iter = -1;
-        velocidad = new double[2];
+        v = new double[2];
         vecinos = new Lista<>();
-        mejores = new Lista<>();
-    }
-
-    public Particula(Particula p) {
-        id = p.id;
-        color = p.color;
-        forma = p.forma;
-        x = p.x;
-        y = p.y;
-        eval = p.eval;
-        iter = p.iter;
     }
 
     public void rosenbrock() {
@@ -60,16 +54,92 @@ public class Particula {
         coste = (new DecimalFormat("0.####E0")).format(z);
     }
 
-    public void moverB(Random rand, int t) {
+    public void mover(Lista<Particula> listaB, Random rand, int t, char tipo) {
+        switch (tipo) {
+            case 'B':
+                borde(t);
+                break;
+            case 'R':
+                rebote(t);
+                break;
+            case 'S':
+                salto(t);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        double vx, vy, rand1, rand2;
+        rand1 = rand.nextDouble();
+        rand2 = rand.nextDouble();
+
+        Particula.sort(vecinos);
+        Particula lBest = vecinos.get(0);
+
+        Particula gBest = listaB.get(0);
+        int i = 1;
+        boolean iguales = gBest.id == id;
+        while (iguales && i < listaB.size()) {
+            Particula b = listaB.get(i);
+            if (b.id != id) {
+                gBest = b;
+                iguales = false;
+            }
+            i++;
+        }
+
+        vx = global(rand1, rand2, gBest.x);
+        vy = global(rand1, rand2, gBest.y);
+
+        vx = P5.OMEGA * v[0] + P5.PHI1 * rand1 * (pBestx - x) + P5.PHI2 * rand2 * (gBest.x - x);
+        vy = P5.OMEGA * v[1] + P5.PHI1 * rand1 * (pBesty - y) + P5.PHI2 * rand2 * (gBest.y - y);
+
+        if (vx > P5.VMAXX[t]) {
+            vx = P5.VMAXX[t];
+        }
+        if (vx < P5.VMINX[t]) {
+            vx = P5.VMINX[t];
+        }
+        if (vy > P5.VMAXY[t]) {
+            vy = P5.VMAXY[t];
+        }
+        if (vy < P5.VMINY[t]) {
+            vy = P5.VMINY[t];
+        }
+        v[0] = vx;
+        v[1] = vy;
+    }
+
+    private void borde(int t) {
 
     }
 
-    public void moverR(Random rand, int t) {
+    private void rebote(int t) {
 
     }
 
-    public void moverS(Random rand, int t) {
-
+    private void salto(int t) {
+        double posx, posy;
+        posx = x + v[0];
+        if (posx > P5.MAXX[t]) {
+            posx = P5.MINX[t];
+        }
+        if (posx < P5.MINX[t]) {
+            posx = P5.MAXX[t];
+        }
+        x = posx;
+        posy = y + v[1];
+        if (posy > P5.MAXY[t]) {
+            posy = P5.MINY[t];
+        }
+        if (posy < P5.MINY[t]) {
+            posy = P5.MAXY[t];
+        }
+        y = posy;
+    }
+    
+    private double global(double r1,double r2, double gBest){
+        return 0;
     }
 
     public static Particula genRandom(Random rand, int t) {
@@ -79,8 +149,8 @@ public class Particula {
 
         double vx = P5.VMINX[t] + (P5.VMAXX[t] - P5.VMINX[t]) * rand.nextDouble();
         double vy = P5.VMINY[t] + (P5.VMAXY[t] - P5.VMINY[t]) * rand.nextDouble();
-        p.velocidad[0] = vx;
-        p.velocidad[1] = vy;
+        p.v[0] = vx;
+        p.v[1] = vy;
 
         return p;
     }

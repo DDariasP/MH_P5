@@ -16,8 +16,9 @@ public class P5 {
     public static final double PHI1 = 1.49445;
     public static final double PHI2 = 1.49445;
     public static final int VECIN = 2;
-    public static final double[] MAXITER = {100.0, 100.0};
-    public static final int[] RATIO = {4, 4};
+    public static final double[] MAXITER = {25.0, 25.0};
+    public static final double[] V = {2.0, 2.0};
+    public static final int[] RATIO = {1, 1};
     public static final String[] P = {"Rosenbrock", "Rastrigin"};
     public static final double[] MINX = {-1.5, -5.0};
     public static final double[] MAXX = {2.0, 5.0};
@@ -29,6 +30,7 @@ public class P5 {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
 
@@ -38,9 +40,9 @@ public class P5 {
         VMINY = new double[P.length];
         VMAXY = new double[P.length];
         for (int t = 0; t < P.length; t++) {
-            VMAXX[t] = (abs(MINX[t]) + abs(MAXX[t])) / (MAXITER[t] / 2.0);
+            VMAXX[t] = (abs(MINX[t]) + abs(MAXX[t])) / (MAXITER[t] * V[t]);
             VMINX[t] = -VMAXX[t];
-            VMAXY[t] = (abs(MINY[t]) + abs(MAXY[t])) / (MAXITER[t] / 2.0);
+            VMAXY[t] = (abs(MINY[t]) + abs(MAXY[t])) / (MAXITER[t] * V[t]);
             VMINY[t] = -VMAXY[t];
         }
 
@@ -68,7 +70,7 @@ public class P5 {
             System.out.println("PSO_B - " + P[t]);
             System.out.println("coste\t\t\teval\titer");
             for (int i = 0; i < SEED.length; i++) {
-                PSO_B[t][i] = new PSO(SEED[i], t, 0);
+                PSO_B[t][i] = new PSO(SEED[i], t, 'B');
                 PSO_B[t][i].ejecutarPSO();
             }
             System.out.println("------------------------------------------------------");
@@ -80,7 +82,7 @@ public class P5 {
             System.out.println("PSO_R - " + P[t]);
             System.out.println("coste\t\t\teval\titer");
             for (int i = 0; i < SEED.length; i++) {
-                PSO_R[t][i] = new PSO(SEED[i], t, 1);
+                PSO_R[t][i] = new PSO(SEED[i], t, 'R');
                 PSO_R[t][i].ejecutarPSO();
             }
             System.out.println("------------------------------------------------------");
@@ -92,7 +94,7 @@ public class P5 {
             System.out.println("PSO_S - " + P[t]);
             System.out.println("coste\t\t\teval\titer");
             for (int i = 0; i < SEED.length; i++) {
-                PSO_S[t][i] = new PSO(SEED[i], t, 2);
+                PSO_S[t][i] = new PSO(SEED[i], t, 'S');
                 PSO_S[t][i].ejecutarPSO();
             }
             System.out.println("------------------------------------------------------");
@@ -100,5 +102,6 @@ public class P5 {
 
         //GUARDAR
         Parser.escribir("R.txt");
+
     }
 }

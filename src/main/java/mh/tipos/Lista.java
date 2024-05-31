@@ -28,6 +28,10 @@ public class Lista<T> {
         lista.add(obj);
     }
 
+    public void add(int index, T obj) {
+        lista.add(index, obj);
+    }
+
     public void remove(int index) {
         lista.remove(index);
     }

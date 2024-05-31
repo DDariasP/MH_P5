@@ -1,5 +1,6 @@
 package mh;
 
+import mh.tipos.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,25 +30,29 @@ public class Parser {
 
                 writer.write("\nBL - " + P5.MAXITER[t] + " iter");
                 for (int i = 0; i < P5.SEED.length; i++) {
-                    writer.write("\n" + P5.BL[t][i].solucion.coste + "\t\t" + P5.BL[t][i].solucion.eval);
+                    Particula s = P5.BL[t][i].solucion;
+                    writer.write("\n" + s.coste + "\t\t" + s.eval);
                 }
                 writer.write("\n---------------------\n");
 
                 writer.write("\nPSO/B - " + P5.MAXITER[t] + " iter");
                 for (int i = 0; i < P5.SEED.length; i++) {
-                    writer.write("\n" + P5.PSO_B[t][i].solucion.coste + "\t\t" + P5.PSO_B[t][i].solucion.eval);
+                    Particula s = P5.PSO_B[t][i].gBest.get(0);
+                    writer.write("\n" + s.coste + "\t\t" + s.eval);
                 }
                 writer.write("\n---------------------\n");
 
                 writer.write("\nPSO/R - " + P5.MAXITER[t] + " iter");
                 for (int i = 0; i < P5.SEED.length; i++) {
-                    writer.write("\n" + P5.PSO_R[t][i].solucion.coste + "\t\t" + P5.PSO_R[t][i].solucion.eval);
+                    Particula s = P5.PSO_R[t][i].gBest.get(0);
+                    writer.write("\n" + s.coste + "\t\t" + s.eval);
                 }
                 writer.write("\n---------------------\n");
 
                 writer.write("\nPSO/S - " + P5.MAXITER[t] + " iter");
                 for (int i = 0; i < P5.SEED.length; i++) {
-                    writer.write("\n" + P5.PSO_S[t][i].solucion.coste + "\t\t" + P5.PSO_S[t][i].solucion.eval);
+                    Particula s = P5.PSO_S[t][i].gBest.get(0);
+                    writer.write("\n" + s.coste + "\t\t" + s.eval);
                 }
                 writer.write("\n---------------------\n\n");
             }
