@@ -6,6 +6,7 @@ import org.jfree.chart.util.ShapeUtils;
 import java.awt.Color;
 import java.awt.Shape;
 import static java.lang.Math.*;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -15,11 +16,12 @@ public class Particula {
 
     public static int N = 0;
     public static final Color[] C = {Color.MAGENTA, Color.GREEN, Color.YELLOW, Color.RED, Color.CYAN};
-    public static final Shape[] F = {ShapeUtils.createDiamond(5), ShapeUtils.createDiagonalCross(4, 1)};
+    public static final Shape[] F = {ShapeUtils.createDiamond(6), ShapeUtils.createDiagonalCross(4, 1)};
     public final int id;
     public final Color color;
     public final Shape forma;
     public double x, y, z;
+    public String coste;
     public int eval, iter;
     public double[] velocidad;
     public Lista<Particula> vecinos, mejores;
@@ -50,10 +52,12 @@ public class Particula {
 
     public void rosenbrock() {
         z = pow((1.0 - x), 2.0) + 100.0 * pow((y - pow(x, 2.0)), 2.0);
+        coste = (new DecimalFormat("0.####E0")).format(z);
     }
 
     public void rastrigin() {
         z = 20.0 + pow(x, 2.0) + pow(y, 2.0) - 10.0 * (cos(2 * PI * x) + cos(2 * PI * y));
+        coste = (new DecimalFormat("0.####E0")).format(z);
     }
 
     public void moverB(Random rand, int t) {

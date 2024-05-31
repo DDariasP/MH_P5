@@ -16,8 +16,8 @@ public class P5 {
     public static final double PHI1 = 1.49445;
     public static final double PHI2 = 1.49445;
     public static final int VECIN = 2;
-    public static final double[] MAXITER = {10.0, 10.0};
-    public static final int[] RATIO = {1, 1};
+    public static final double[] MAXITER = {100.0, 100.0};
+    public static final int[] RATIO = {4, 4};
     public static final String[] P = {"Rosenbrock", "Rastrigin"};
     public static final double[] MINX = {-1.5, -5.0};
     public static final double[] MAXX = {2.0, 5.0};

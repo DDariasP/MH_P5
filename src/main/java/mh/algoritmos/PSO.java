@@ -27,7 +27,7 @@ public class PSO {
 
     public void ejecutarPSO() throws InterruptedException {
         PSO();
-        System.out.println(solucion.z + "\t" + solucion.eval + "\t" + solucion.iter);
+        System.out.println(solucion.coste + "\t\t" + solucion.eval + "\t" + solucion.iter);
     }
 
     public void PSO() throws InterruptedException {

@@ -24,7 +24,7 @@ public class BusquedaLocal {
 
     public void ejecutarBL() {
         BL();
-        System.out.println(solucion.z + "\t" + solucion.eval + "\t" + solucion.iter);
+        System.out.println(solucion.coste + "\t\t" + solucion.eval + "\t" + solucion.iter);
     }
 
     public void BL() {
