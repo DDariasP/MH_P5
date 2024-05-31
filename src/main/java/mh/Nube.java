@@ -2,7 +2,6 @@ package mh;
 
 import mh.tipos.*;
 import java.awt.Color;
-import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -11,7 +10,6 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.util.ShapeUtils;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -20,28 +18,29 @@ import org.jfree.data.xy.XYSeriesCollection;
  *
  * @author diego
  */
-public class Grafo extends JFrame {
-
-    public Lista<Particula> nube;
-
-    public Grafo() {
-    }
-
-    public void Grafo(Lista<Particula> swarm, int t) {
-        nube = swarm;
+public class Nube extends JFrame {
+    
+    public void Nube(Lista<Particula> swarm, int t) {
 
         //crear la grafica
         XYPlot plot = new XYPlot();
-
-        //crear la nube
-        XYDataset setNube = createNube();
-        //caracteristicas de la nube
-        XYItemRenderer rendererN = new XYLineAndShapeRenderer(false, true);
-        rendererN.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
-        rendererN.setSeriesPaint(0, Color.MAGENTA);
-        //añadir la nube a la grafica
-        plot.setDataset(nube.size(), setNube);
-        plot.setRenderer(nube.size(), rendererN);
+        
+        for (int i = 0; i < swarm.size(); i++) {
+            //leer la particula
+            Particula p = swarm.get(i);
+            XYSeriesCollection dataset = new XYSeriesCollection();
+            XYSeries series = new XYSeries("");
+            series.add(p.x, p.y);
+            dataset.addSeries(series);
+            XYDataset datosP = dataset;
+            //caracteristicas de la particula
+            XYItemRenderer renderer = new XYLineAndShapeRenderer(false, true);
+            renderer.setSeriesShape(0, p.forma);
+            renderer.setSeriesPaint(0, p.color);
+            //añadir la particula a la grafica
+            plot.setDataset(i, datosP);
+            plot.setRenderer(i, renderer);
+        }
 
         //crear y añadir los ejes
         ValueAxis domain = new NumberAxis("");
@@ -62,16 +61,5 @@ public class Grafo extends JFrame {
         panel.setRangeZoomable(true);
         setContentPane(panel);
     }
-
-    private XYDataset createNube() {
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        //ciudades 
-        XYSeries series = new XYSeries("");
-        for (int i = 0; i < nube.size(); i++) {
-            series.add(nube.get(i).x, nube.get(i).y);
-        }
-        dataset.addSeries(series);
-        return dataset;
-    }
-
+    
 }

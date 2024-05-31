@@ -33,7 +33,7 @@ public class PSO {
     public void PSO() throws InterruptedException {
         int eval = 0;
         int iter = 0;
-        Grafo g = new Grafo();
+        Nube g = new Nube();
 
         for (int i = 0; i < P5.NUMP; i++) {
             Particula inicial = Particula.genRandom(rand, t);
@@ -80,12 +80,12 @@ public class PSO {
                 actual.iter = iter;
             }
 
-            g.Grafo(swarm, t);
+            g.Nube(swarm, t);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 200, 600, 600);
             g.setTitle("PSO/" + nombre[tipo] + " - " + P5.P[t] + "/S" + SEED);
             g.setVisible(true);
-            Thread.sleep(100);
+            Thread.sleep(0);
 
             Particula.sort(swarm);
             Particula candidata = swarm.get(0);

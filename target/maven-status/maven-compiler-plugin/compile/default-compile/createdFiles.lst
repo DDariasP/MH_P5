@@ -1,8 +1,8 @@
 mh/P5.class
 mh/algoritmos/BusquedaLocal.class
-mh/Grafo.class
 mh/algoritmos/PSO.class
 mh/Grafica.class
 mh/tipos/Lista.class
+mh/Nube.class
 mh/Parser.class
 mh/tipos/Particula.class

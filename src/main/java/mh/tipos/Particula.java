@@ -2,6 +2,9 @@ package mh.tipos;
 
 import mh.P5;
 import java.util.Random;
+import org.jfree.chart.util.ShapeUtils;
+import java.awt.Color;
+import java.awt.Shape;
 import static java.lang.Math.*;
 
 /**
@@ -11,7 +14,11 @@ import static java.lang.Math.*;
 public class Particula {
 
     public static int N = 0;
+    public static final Color[] C = {Color.MAGENTA, Color.GREEN, Color.YELLOW, Color.RED, Color.CYAN};
+    public static final Shape[] F = {ShapeUtils.createDiamond(5), ShapeUtils.createDiagonalCross(4, 1)};
     public final int id;
+    public final Color color;
+    public final Shape forma;
     public double x, y, z;
     public int eval, iter;
     public double[] velocidad;
@@ -20,6 +27,8 @@ public class Particula {
     public Particula(double a, double b) {
         id = N;
         N++;
+        color = C[id % C.length];
+        forma = F[id % F.length];
         x = a;
         y = b;
         eval = -1;
@@ -31,6 +40,8 @@ public class Particula {
 
     public Particula(Particula p) {
         id = p.id;
+        color = p.color;
+        forma = p.forma;
         x = p.x;
         y = p.y;
         eval = p.eval;

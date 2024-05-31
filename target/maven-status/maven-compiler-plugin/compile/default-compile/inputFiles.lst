@@ -1,4 +1,3 @@
-/home/diego/NetBeansProjects/MH_P5/src/main/java/mh/Grafo.java
 /home/diego/NetBeansProjects/MH_P5/src/main/java/mh/algoritmos/PSO.java
 /home/diego/NetBeansProjects/MH_P5/src/main/java/mh/P5.java
 /home/diego/NetBeansProjects/MH_P5/src/main/java/mh/Grafica.java
@@ -6,3 +5,4 @@
 /home/diego/NetBeansProjects/MH_P5/src/main/java/mh/tipos/Particula.java
 /home/diego/NetBeansProjects/MH_P5/src/main/java/mh/algoritmos/BusquedaLocal.java
 /home/diego/NetBeansProjects/MH_P5/src/main/java/mh/Parser.java
+/home/diego/NetBeansProjects/MH_P5/src/main/java/mh/Nube.java

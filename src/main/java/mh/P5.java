@@ -55,7 +55,7 @@ public class P5 {
             }
             System.out.println("------------------------------------------------------");
             //CONVERGENCIA
-            Grafica convBL = new Grafica(BL[t], P[t]);
+            Grafica convBL = new Grafica(BL[t], t);
             convBL.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             convBL.setBounds(1000, 100, 800, 400);
             convBL.setTitle("BL - " + P[t]);
