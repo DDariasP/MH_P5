@@ -77,7 +77,9 @@ public class PSO {
 
             g.Nube(swarm, t);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            g.setBounds(200, 200, 600, 600);
+            g.setSize(600, 600);
+            g.setFocusable(false);
+            g.setFocusableWindowState(false);
             g.setTitle("PSO/" + scope + " - " + P5.P[t] + "/S" + SEED);
             g.setVisible(true);
             Thread.sleep(P5.T);
