@@ -14,6 +14,7 @@ public class PSO {
     public final int SEED, t;
     public final char scope;
     public Random rand;
+    public Lista<Double> convergencia;
     public Lista<Particula> swarm;
     public Lista<Particula> gBest;
 
@@ -22,6 +23,7 @@ public class PSO {
         t = b;
         scope = c;
         rand = new Random(SEED);
+        convergencia = new Lista<>();
         swarm = new Lista<>();
         gBest = new Lista<>();
     }
@@ -29,7 +31,7 @@ public class PSO {
     public void ejecutarPSO() throws InterruptedException {
         PSO();
         Particula s = gBest.get(0);
-        System.out.println(s.coste + "\t\t" + s.eval + "\t" + s.iter);
+        System.out.println(s.coste + "\t" + s.eval + "\t" + s.iter);
     }
 
     public void PSO() throws InterruptedException {
@@ -53,7 +55,9 @@ public class PSO {
         Particula.vecindario(swarm);
 
         Particula.sort(swarm);
-        gBest.add(0, swarm.get(0));
+        gBest.add(0, new Particula(swarm.get(0)));
+        convergencia.add(gBest.get(0).z);
+        
         while (iter < P5.MAXITER[t]) {
             iter++;
             for (int i = 0; i < P5.NUMP; i++) {
@@ -86,8 +90,13 @@ public class PSO {
 
             Particula.sort(swarm);
             Particula candidata = swarm.get(0);
+
             if (gBest.get(0).z > candidata.z) {
-                gBest.add(0, candidata);
+                gBest.add(0, new Particula(candidata));
+
+            }
+            if (iter % P5.RATIO[t] == 0) {
+                convergencia.add(gBest.get(0).z);
             }
         }
 

@@ -16,20 +16,20 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class Grafica extends JFrame {
-
+    
     public double minY, maxY;
-
-    public Grafica(BusquedaLocal[] bl, int t) {
+    
+    public Grafica(Lista[] conv, int t) {
         minY = Double.MAX_VALUE;
         maxY = Double.MIN_VALUE;
 
         //crear la grafica
         XYPlot plot = new XYPlot();
-
-        for (int i = 0; i < bl.length; i++) {
+        
+        for (int i = 0; i < conv.length; i++) {
             String nombre = P5.P[t] + "-S" + P5.SEED[i];
             //crear la funcion
-            XYDataset funcion = createDataset(bl[i].convergencia, nombre);
+            XYDataset funcion = createDataset(conv[i], nombre);
             //caracteristicas de la funcion
             XYItemRenderer renderer = new XYLineAndShapeRenderer(true, true);
             renderer.setSeriesStroke(0, new BasicStroke(2.0f));
@@ -40,6 +40,7 @@ public class Grafica extends JFrame {
 
         //crear y añadir los ejes
         ValueAxis domain = new NumberAxis("Iteración (1 : " + P5.RATIO[t] + ")");
+        domain.setRange(0, conv[0].size() - 1);
         ValueAxis range = new NumberAxis("Coste");
         double diffY = Math.abs((maxY - minY) / 10.0);
         range.setRange(minY - diffY, maxY + diffY);
@@ -56,7 +57,7 @@ public class Grafica extends JFrame {
         panel.setRangeZoomable(true);
         setContentPane(panel);
     }
-
+    
     private XYDataset createDataset(Lista<Double> datos, String nombre) {
         //leer los datos
         XYSeriesCollection dataset = new XYSeriesCollection();

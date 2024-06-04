@@ -18,8 +18,8 @@ public class Particula {
     public static final Color[] C = {Color.MAGENTA, Color.GREEN, Color.YELLOW, Color.RED, Color.CYAN};
     public static final Shape[] F = {ShapeUtils.createDiamond(6), ShapeUtils.createDiagonalCross(4, 1)};
     public final int id;
-    public final Color color;
-    public final Shape forma;
+    public Color color;
+    public Shape forma;
     public double x, y, z;
     public double pBestx, pBesty, pBestz;
     public String coste;
@@ -44,6 +44,16 @@ public class Particula {
         vecinos = new Lista<>();
     }
 
+    public Particula(Particula p) {
+        id = p.id;
+        x = p.x;
+        y = p.y;
+        z = p.z;
+        coste = p.coste;
+        eval = p.eval;
+        iter = p.iter;
+    }
+
     public void rosenbrock() {
         z = pow((1.0 - x), 2.0) + 100.0 * pow((y - pow(x, 2.0)), 2.0);
         coste = (new DecimalFormat("0.####E0")).format(z);
@@ -58,18 +68,18 @@ public class Particula {
         double posx, posy;
         posx = x + v[0];
         if (posx > P5.MAXX[t]) {
-            posx = P5.MINX[t];
+            posx = P5.MAXX[t];
         }
         if (posx < P5.MINX[t]) {
-            posx = P5.MAXX[t];
+            posx = P5.MINX[t];
         }
         x = posx;
         posy = y + v[1];
         if (posy > P5.MAXY[t]) {
-            posy = P5.MINY[t];
+            posy = P5.MAXY[t];
         }
         if (posy < P5.MINY[t]) {
-            posy = P5.MAXY[t];
+            posy = P5.MINY[t];
         }
         y = posy;
     }

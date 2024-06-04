@@ -30,7 +30,7 @@ public class Parser {
 
                 writer.write("\nBL - " + P5.MAXITER[t] + " iter");
                 for (int i = 0; i < P5.SEED.length; i++) {
-                    Particula s = P5.BL[t][i].solucion;
+                    Particula s = P5.BL[t][i].s;
                     writer.write("\n" + s.coste + "\t\t" + s.eval);
                 }
                 writer.write("\n---------------------\n");

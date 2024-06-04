@@ -13,7 +13,7 @@ public class BusquedaLocal {
     public final int SEED, t;
     public Random rand;
     public Lista<Double> convergencia;
-    public Particula solucion;
+    public Particula s;
 
     public BusquedaLocal(int a, int b) {
         SEED = a;
@@ -24,12 +24,13 @@ public class BusquedaLocal {
 
     public void ejecutarBL() {
         BL();
-        System.out.println(solucion.coste + "\t\t" + solucion.eval + "\t" + solucion.iter);
+        System.out.println(s.coste + "\t" + s.eval + "\t" + s.iter);
     }
 
     public void BL() {
         int eval = 0;
         int iter = 0;
+
         Particula inicial = Particula.genRandom(rand, t);
         if (t == 0) {
             inicial.rosenbrock();
@@ -41,7 +42,7 @@ public class BusquedaLocal {
         inicial.iter = iter;
         convergencia.add(inicial.z);
 
-        solucion = inicial;
+        s = inicial;
         Particula actual = inicial;
         Particula siguiente;
         while (iter < P5.MAXITER[t]) {
@@ -62,14 +63,15 @@ public class BusquedaLocal {
 
             Particula.sort(actual.vecinos);
             siguiente = actual.vecinos.get(0);
+
             if (actual.z > siguiente.z) {
                 actual = siguiente;
             }
-            if (solucion.z > siguiente.z) {
-                solucion = siguiente;
+            if (s.z > siguiente.z) {
+                s = siguiente;
             }
             if (iter % P5.RATIO[t] == 0) {
-                convergencia.add(solucion.z);
+                convergencia.add(s.z);
             }
         }
     }
